@@ -1,0 +1,4 @@
+interface:
+  display_name: "NaS PoC UI"
+  short_description: "淡い青とガラス表現でNaSの商談用Web PoCを統一する"
+  default_prompt: "$nas-poc-ui を使って、PC・スマホ両対応のNaS向けPoC画面を作成してください。"
