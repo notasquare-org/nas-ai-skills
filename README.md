@@ -5,7 +5,7 @@ Not a Squareで利用するAI Skillと会社コンテキストの正本です。
 ## 収録内容
 
 - `nas-slides/`: NaS正式トンマナで編集可能なスライドを制作・検証するSkill
-- `nas-poc-ui/`: 淡い青とガラス表現でNaSの商談用Web PoCを統一するUI Skill（配色CSS・PC／スマホの画面見本付き）
+- `nas-poc-ui/`: 用途と操作の流れから画面構成を選び、淡い青とガラス表現でNaSの商談用Web PoCを統一するUI Skill（配置ガイド・配色CSS・PC／スマホの画面見本付き）
 - `cloudflare-os-build-gadget/`: Cloudflare OS Gadgetを設計・梱包・検証するSkill
 - `company-context/`: NaSの会社情報と、確定・未確定事項の基礎コンテキスト
 

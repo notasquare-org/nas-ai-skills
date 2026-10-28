@@ -1,4 +1,4 @@
 interface:
   display_name: "NaS PoC UI"
-  short_description: "淡い青とガラス表現でNaSの商談用Web PoCを統一する"
-  default_prompt: "$nas-poc-ui を使って、PC・スマホ両対応のNaS向けPoC画面を作成してください。"
+  short_description: "用途と操作の流れから配置を選び、NaSの共通トンマナでWeb PoCを作る"
+  default_prompt: "$nas-poc-ui を使い、用途に合うPC・スマホの画面構成を選んで理由を短く示し、NaSの共通トンマナでPoCを実装してください。判断に必要な情報が不足する場合は質問してください。"
