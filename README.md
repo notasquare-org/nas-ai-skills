@@ -6,6 +6,7 @@ Not a Squareで利用するAI Skillと会社コンテキストの正本です。
 
 - `nas-slides/`: NaS正式トンマナで編集可能なスライドを制作・検証するSkill
 - `cloudflare-os-build-gadget/`: Cloudflare OS Gadgetを設計・梱包・検証するSkill
+- `subsidy-lead-outreach/`: 補助金・認定リストの企業名を公式サイト・連絡先・ペルソナ付きのメルアポリストに整形するSkill
 - `company-context/`: NaSの会社情報と、確定・未確定事項の基礎コンテキスト
 
 ## 運用ルール
