@@ -1,0 +1,154 @@
+/* NaS Liquid Blue: opt-in defaults for a PoC, not a global stylesheet. */
+[data-nas-ui] {
+  color-scheme: light dark;
+  --nas-primary: light-dark(#175dc6, #a1c7ff);
+  --nas-on-primary: light-dark(#ffffff, #102d56);
+  --nas-background: light-dark(#f5f8fd, #1b2634);
+  --nas-surface: light-dark(#ffffff, #20252d);
+  --nas-text: light-dark(#233247, #ecf1f8);
+  --nas-text-secondary: light-dark(#5d6f85, #b2c1d3);
+  --nas-tint: light-dark(#edf4ff, #23364e);
+  --nas-divider: light-dark(#e1e8f1, #3b4b5f);
+  --nas-input-surface: light-dark(#f6f9fe, #273342);
+  --nas-input-border: light-dark(#dce5f2, #45566c);
+  --nas-focus-surface: light-dark(#f0f6ff, #293c55);
+  --nas-focus-border: light-dark(#6c9adc, #97bff2);
+  --nas-error: light-dark(#b6353e, #ffb4b9);
+  --nas-glass-alpha: .36;
+  --nas-glass-fill: light-dark(
+    rgb(255 255 255 / var(--nas-glass-alpha)),
+    rgb(36 51 71 / var(--nas-glass-alpha))
+  );
+  --nas-glass-rim: light-dark(#ffffffeb, #c6e0ff65);
+  --nas-glass-edge: light-dark(#6286b82b, #8cb4e538);
+  --nas-glass-shadow: light-dark(#2d548b18, #00000032);
+  --nas-radius-glass: 14px;
+  --nas-radius-control: 10px;
+  --nas-radius-input: 8px;
+  --nas-radius-composer: 12px;
+  --nas-control-min-height: 44px;
+  --nas-space-1: 4px;
+  --nas-space-2: 8px;
+  --nas-space-3: 12px;
+  --nas-space-4: 16px;
+  --nas-space-6: 24px;
+  --nas-space-8: 32px;
+  --nas-font-body: 14px;
+  --nas-font-caption: 12px;
+  --nas-font-title: 21px;
+  --nas-motion-duration: 150ms;
+  color: var(--nas-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+}
+
+/* Explicit application themes take precedence over the system appearance. */
+[data-nas-ui][data-nas-theme="light"] { color-scheme: light; }
+[data-nas-ui][data-nas-theme="dark"] { color-scheme: dark; }
+
+/* Compact composer. Let the application grow/reset textarea height on input. */
+[data-nas-ui] .nas-composer-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px;
+  align-items: end;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid var(--nas-input-border);
+  border-radius: var(--nas-radius-composer);
+  background: var(--nas-input-surface);
+}
+
+[data-nas-ui] .nas-composer-entry:focus-within {
+  background: var(--nas-focus-surface);
+  border-color: var(--nas-focus-border);
+}
+
+[data-nas-ui] .nas-composer-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  max-height: 144px;
+  padding: 10px 7px;
+  resize: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--nas-text);
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* A group of related short fields; do not nest additional input cards. */
+[data-nas-ui] .nas-input-group {
+  padding: 0 16px;
+  border-radius: 12px;
+  background: var(--nas-input-surface);
+}
+
+[data-nas-ui] .nas-field-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 0 12px;
+  min-height: 68px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--nas-input-border);
+}
+
+[data-nas-ui] .nas-field-row:last-child { border-bottom: 0; }
+[data-nas-ui] .nas-field-row:focus-within { background: var(--nas-focus-surface); }
+
+[data-nas-ui] .nas-field-input {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--nas-control-min-height);
+  padding: 9px 5px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--nas-text);
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+}
+
+[data-nas-ui] .nas-field-input[aria-invalid="true"] {
+  box-shadow: inset 0 -1px 0 var(--nas-error);
+}
+
+[data-nas-ui] .nas-field-error {
+  grid-column: 2;
+  color: var(--nas-error);
+  font-size: 12px;
+}
+
+/* Use on functional navigation/toolbars, rather than every content panel. */
+[data-nas-ui] .nas-glass {
+  border: 0;
+  border-radius: var(--nas-radius-glass);
+  background: var(--nas-surface);
+  box-shadow: inset 0 1px 0 var(--nas-glass-rim),
+    inset 0 -1px 0 var(--nas-glass-edge),
+    0 5px 20px var(--nas-glass-shadow);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  [data-nas-ui] .nas-glass {
+    background: var(--nas-glass-fill);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-nas-ui] .nas-glass {
+    background: var(--nas-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-nas-ui] { --nas-motion-duration: 0ms; }
+}
