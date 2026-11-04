@@ -1,6 +1,6 @@
 ---
 name: subsidy-lead-outreach
-description: Enriches a spreadsheet of companies sourced from government subsidy/certification programs (IT implementation subsidies, DX certification lists, reskilling grant recipients, etc.) into a cold-email-ready outreach list — finds each company's official website via web search, extracts a contact email or inquiry form, assigns a sales persona based on which subsidy program the company came from, and fills in persona-matched email subject/body text directly into the sheet. Use this whenever the user wants to turn a company-name list (any 補助金/認定/助成金 recipient list, DX認定事業者リスト, 商工会議所 or 自治体 case-study list) into a 営業リスト, メルアポリスト, or cold outreach list, or asks to enrich company names with 公式サイト/連絡先/メールアドレス, or wants to classify leads by ペルソナ for sales messaging. Also trigger when the user adds a new subsidy/certification source and wants it mapped into the existing persona system.
+description: Enriches a spreadsheet of companies sourced from government subsidy/certification programs (IT implementation subsidies, DX certification lists, reskilling grant recipients, etc.) into a cold-email-ready outreach list — finds each company's official website via web search, extracts a contact email or inquiry form, assigns a sales persona based on which subsidy program the company came from, and fills in persona-matched email subject/body text directly into the sheet. Also covers the sending step once enrichment is done: tracking 送信ステータス per row, confirming the sending identity, computing a batch size from a stated pace target (e.g. "cover the list once every N weeks"), and the legal footer (特定電子メール法) every sent email needs. Use this whenever the user wants to turn a company-name list (any 補助金/認定/助成金 recipient list, DX認定事業者リスト, 商工会議所 or 自治体 case-study list) into a 営業リスト, メルアポリスト, or cold outreach list; asks to enrich company names with 公式サイト/連絡先/メールアドレス; wants to classify leads by ペルソナ; or wants to send/track the resulting outreach (送信ステータス, 送信管理, メルアポ送信). Also trigger when the user adds a new subsidy/certification source and wants it mapped into the existing persona system.
 ---
 
 # Subsidy Lead Outreach
@@ -76,19 +76,36 @@ Add or fill these columns for each processed row (create them if the sheet doesn
 | Column | Content |
 |---|---|
 | 判定 | 確定 / 不確実 / 未発見 |
-| 公式URL | the confirmed URL (blank if 不確実 or 未発見) |
+| 公式URL | the confirmed URL (blank if 不確実 or 未発見; skip this column if the sheet already has a 公式サイト column populated from sourcing — don't duplicate it) |
 | 連絡先種別 | メール / フォーム / 不明 |
 | 連絡先 | the email address or form URL |
-| ペルソナ | the persona code from persona-mapping.md |
+| ペルソナ | the persona code from persona-mapping.md (if every row in the tab already shares one persona by construction, prefill the whole column at intake instead of re-deriving it company by company) |
 | メール件名 | from the matched template |
 | メール本文 | from the matched template, with company name merged in |
 | 備考 | judgment reasoning for 不確実/未発見, or anything else worth a human's attention |
+| 送信ステータス | 未送信 / 送信済み / 返信あり / 配信停止希望 / エラー — default every row to 未送信 at setup time so the sheet is immediately readable, then only this skill's sending step (see "Sending" below) or a human updates it |
+| 送信日時 | filled in when 送信ステータス moves to 送信済み |
+| 返信日時 | filled in when a reply arrives and 送信ステータス moves to 返信あり or 配信停止希望 |
+| 送信備考 | anything about the send itself worth a human's attention (bounced, address stale, etc.) — separate from the enrichment-time 備考 column |
 
 Follow the Google Sheets skill's rules for writing values accurately — large batches of hand-typed Japanese text are where mistakes creep in, so after writing, read back what you wrote and diff it against what you intended to write before reporting the batch as done. This caught real corruption (wrong kanji substitutions) during this skill's development; do not skip it to save time.
 
 ### 6. Report a summary
 
 Give the user counts (確定 / 不確実 / 未発見), not a row-by-row recap. Point out anything that needs a human decision: 不確実 cases, companies with no contact method found, and the running total of companies left unprocessed in the sheet.
+
+## Sending (once enrichment is done)
+
+Enrichment (steps 1–5 above) only prepares the row. Nothing sends until this step runs, and this step itself never runs unsupervised — get the user's explicit go-ahead for each batch before sending a single email, even if they've approved a previous batch. That isn't a workflow preference; it's a hard constraint on what this assistant can do, so don't design around it or try to schedule it unattended.
+
+1. **Confirm the sending identity first, not the first time you need it.** The intended from-address is a shared inbox (e.g. `founders@` at the company domain), not a personal address, so replies land somewhere a team can see. Before the first real send, confirm that address can actually send — either it's a "send as" alias on the connected mail account, or the connected account *is* that address — rather than assuming.
+2. **Only send rows marked 確定 with a real 連絡先, and only ones still at 送信ステータス = 未送信.** Skip 不確実/未発見 rows and anything already 送信済み/返信あり/配信停止希望 — this is what prevents double-sending as the sheet gets worked through over multiple sessions.
+3. **Ask how many to send this batch**, same as the enrichment intake question. If the user has stated a target pace (e.g. "cover the whole list once every N weeks"), compute a recommended batch size from it — (rows still 未送信 ÷ remaining days in the cycle) — rather than making the user redo that arithmetic each time, and recommend business days over calendar days unless told otherwise.
+4. **Every email must carry the sender's identity and an opt-out method in the body** (Japan's 特定電子メール法 requirement) — see [assets/email_templates.md](assets/email_templates.md)'s footer block. Don't send a row whose 本文 is missing that footer.
+5. **After sending, write back immediately per row**: 送信ステータス → 送信済み, 送信日時 → now. If a send fails (bounced address, form submission error), set 送信ステータス → エラー and record why in 送信備考 instead of silently skipping it.
+6. **Report a summary**, not a row-by-row recap: how many sent, how many skipped and why, how many remain 未送信, and — if a target pace was given — whether this batch keeps the cycle on schedule.
+
+A separate reply-tracking mechanism (checking the shared inbox for responses and updating 返信あり/配信停止希望) is not part of this workflow yet; treat it as the next thing to design once sending itself is running, not something to improvise silently.
 
 ## Why not gBizINFO
 

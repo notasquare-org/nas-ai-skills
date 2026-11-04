@@ -8,6 +8,12 @@ Early in designing this skill, the alternative — researching something specifi
 
 These are drafts, not approved copy. Read them, edit them to sound like you, and only then let the skill fill them into a sheet for real. Nothing in this skill sends email on its own — it only prepares the 件名/本文 columns for a human (or a separate, explicitly-approved sending step) to act on.
 
+## Sending identity and legal footer
+
+Sending is intended to go out from **founders@notasquare.co.jp** (not a personal address), so replies land in a shared inbox rather than one person's mailbox. Confirm before the first real send that this address can actually send mail — either because it's a Gmail "send as" alias on the account the sending step is connected to, or because that account's own address *is* founders@notasquare.co.jp — rather than assuming it's already wired up.
+
+Japan's 特定電子メール法 requires every commercial email like this to show the sender's identity and a way to opt out of future contact. Both templates below end with a footer block that must be filled in with real values before first use — `[事業者名/屋号]` and `[所在地]` are placeholders, not something the skill should guess. Do not drop the opt-out line even though the copy stays otherwise generic.
+
 ---
 
 ## Persona A — 実装済み・定着課題
@@ -39,8 +45,11 @@ Not a Squareでは、リスキリング系の補助金を活用しながら、�
 ご興味があれば、本メールにご返信ください。
 
 --
-Not a Square
-酒井涼雅
+Not a Square（ノットアスクエア） 酒井涼雅
+[所在地]
+Email: founders@notasquare.co.jp
+
+今後のご案内を希望されない場合は、お手数ですが本メールにご返信の上、その旨をお知らせください。
 ```
 
 ---
@@ -73,6 +82,9 @@ Not a Squareでは、掲げられたDX戦略を、実際に現場で使えるAI�
 ご返信をお待ちしております。
 
 --
-Not a Square
-酒井涼雅
+Not a Square（ノットアスクエア） 酒井涼雅
+[所在地]
+Email: founders@notasquare.co.jp
+
+今後のご案内を希望されない場合は、お手数ですが本メールにご返信の上、その旨をお知らせください。
 ```
