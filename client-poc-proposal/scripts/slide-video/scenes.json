@@ -1,0 +1,33 @@
+{
+  "_説明": {
+    "name": "出力ファイル名の頭。〈name〉（声・BGM付き）.mp4 と 〈name〉（音なし）.mp4 になる",
+    "assets": "画像を置くフォルダ（scenes.json からの相対パス）",
+    "sample_credit": "他社の素材を映す場面（credit を付けた場面）に出す出典。不要なら空文字",
+    "speaker": "VOICEVOX のスタイルID（冥鳴ひまり=14）。ほかの声は規約を読んでから",
+    "bgm": "true で BGM を合成して混ぜる",
+    "scenes": "image（静止画）か sequence（連番の静止画。frames と sequence_fps も書く）、speech（読み上げる文。英字はカタカナ）、captions（字幕。\\N で改行）、credit（top / bottom）、caption_top（字幕を上に）、duration（読み上げのない場面の秒数）"
+  },
+  "name": "〈先方名〉様_〈アプリ名〉紹介",
+  "assets": "assets",
+  "sample_credit": "〈例: 画像：〇〇 公開サンプル（〇〇株式会社）〉",
+  "speaker": 14,
+  "speaker_name": "冥鳴ひまり",
+  "speed": 1.05,
+  "bgm": true,
+  "scenes": [
+    {"image": "slide_title.png", "speech": "〈先方名〉様向けに検証している、〈アプリの説明〉を、ご紹介します。"},
+    {"image": "slide_problem.png", "speech": "〈いまの課題を話す文。最後に、何を短くしたいか〉"},
+    {"image": "screen_01.png", "credit": "top",
+     "speech": "〈操作1を話す文〉",
+     "captions": ["〈字幕の1つ目〉", "〈字幕の2つ目。\\Nで改行〉"]},
+    {"image": "screen_02.png", "credit": "bottom", "caption_top": true,
+     "speech": "〈操作2を話す文〉",
+     "captions": ["〈字幕〉"]},
+    {"sequence": "wipe_%03d.jpg", "frames": 46, "sequence_fps": 15, "credit": "top",
+     "speech": "〈比較を話す文〉",
+     "captions": ["〈字幕〉"]},
+    {"image": "slide_status.png", "speech": "〈確かめたことと、これから確かめること〉"},
+    {"image": "slide_next.png", "speech": "〈次の一歩〉"},
+    {"image": "slide_end.png", "duration": 3.5}
+  ]
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- 紹介動画のひな形（1920x1080）。型: タイトル → いまの課題 → 解決のしかた → 到達点 → 次の一歩 → 終わり。
+     window.renderAt(秒) でその瞬間の画面を描く。時間で動くCSSアニメーション（animation / transition）は使わない。
+     各要素の data-in（出る秒）/ data-out（消える秒）/ data-fx（up / scale / left / right / fade）を書き換えて作る。
+     data-active-in / data-active-out を付けた要素は、その間だけ濃く、それ以外は薄く表示する（説明中の手順の強調）。
+     〈 〉の部分を案件の内容に置き換える。色は :root の変数で変える。PoCの画面写真は assets/ に置く。 -->
+<html lang="ja"><head><meta charset="utf-8"/>
+<title>紹介動画</title>
+<style>
+:root { --accent:#2457e6; --accent-soft:#dbe5ff; --ink:#1b2130; --muted:#5b6475; --paper:#ffffff; --bg:#f5f7fb; --line:#e2e7f0; --ok:#1f9d55; --todo:#c27c0e; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.a { position: absolute; opacity: 0; will-change: transform, opacity; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; }
+.bar { position: absolute; left: 0; top: 0; width: 1920px; height: 12px; background: var(--accent); }
+.pill { display: inline-block; padding: 14px 30px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 34px; font-weight: 700; }
+h1 { font-size: 108px; font-weight: 800; line-height: 1.22; letter-spacing: .01em; }
+h2 { font-size: 64px; font-weight: 800; line-height: 1.35; }
+.lead { font-size: 44px; color: var(--muted); font-weight: 600; }
+.small { font-size: 28px; color: var(--muted); font-weight: 500; }
+.card { width: 520px; min-height: 290px; border-radius: 28px; background: var(--paper); border: 2px solid var(--line); padding: 40px; }
+.card .n, .step .n { display: inline-flex; width: 58px; height: 58px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 31px; font-weight: 800; align-items: center; justify-content: center; }
+.card .t { margin-top: 24px; font-size: 44px; font-weight: 800; }
+.card .d { margin-top: 14px; font-size: 30px; color: var(--muted); line-height: 1.55; }
+.goal { font-size: 46px; font-weight: 800; color: var(--accent); }
+.frame { width: 1080px; border-radius: 22px; background: var(--paper); border: 2px solid var(--line); box-shadow: 0 24px 60px rgba(27,33,48,.14); overflow: hidden; }
+.frame .top { height: 42px; background: #eef1f6; display: flex; align-items: center; gap: 10px; padding-left: 20px; }
+.frame .top i { width: 14px; height: 14px; border-radius: 50%; background: #c9d0dc; display: inline-block; }
+.frame img { display: block; width: 100%; height: auto; }
+.step { width: 560px; }
+.step .n { margin-right: 18px; vertical-align: middle; }
+.step .t { font-size: 40px; font-weight: 800; vertical-align: middle; }
+.step .d { margin: 12px 0 0 78px; font-size: 29px; color: var(--muted); line-height: 1.5; }
+.item { font-size: 44px; font-weight: 700; display: flex; align-items: center; gap: 22px; }
+.item .mark { width: 62px; height: 62px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 34px; font-weight: 800; flex: none; }
+.item.ok .mark { background: var(--ok); }
+.item.todo .mark { background: var(--todo); }
+</style></head>
+<body><div id="stage">
+  <div class="blob" id="blob1" style="left:-220px;top:-260px;width:900px;height:900px;background:#dfe8ff;"></div>
+  <div class="blob" id="blob2" style="left:1300px;top:620px;width:900px;height:900px;background:#e7f1ff;"></div>
+  <div class="bar"></div>
+
+  <!-- 1. タイトル（0.3〜6.0秒） -->
+  <div class="a pill" data-in="0.3" data-out="6.0" data-fx="up" style="left:140px;top:290px;">〈先方名〉様向け 検証版（PoC）のご紹介</div>
+  <h1 class="a" data-in="0.7" data-out="6.0" data-fx="up" style="left:140px;top:400px;">〈価値をひとことで<br/>2行まで〉</h1>
+  <p class="a lead" data-in="1.3" data-out="6.0" data-fx="up" style="left:144px;top:720px;">〈アプリ名〉</p>
+  <p class="a small" data-in="1.8" data-out="6.0" data-fx="fade" style="left:144px;top:960px;">株式会社Not a Square ・ 〈年〉年〈月〉月</p>
+
+  <!-- 2. いまの課題（6.4〜14.0秒） -->
+  <div class="a pill" data-in="6.4" data-out="14.0" data-fx="up" style="left:140px;top:140px;">いまの課題</div>
+  <h2 class="a" data-in="6.7" data-out="14.0" data-fx="up" style="left:140px;top:240px;">〈先方の今の作業と困りごとを<br/>ひとことで〉</h2>
+  <div class="a card" data-in="7.6" data-out="14.0" data-fx="up" style="left:140px;top:500px;"><span class="n">1</span><p class="t">〈段階1〉</p><p class="d">〈説明〉</p></div>
+  <div class="a card" data-in="8.2" data-out="14.0" data-fx="up" style="left:700px;top:500px;"><span class="n">2</span><p class="t">〈段階2〉</p><p class="d">〈説明〉</p></div>
+  <div class="a card" data-in="8.8" data-out="14.0" data-fx="up" style="left:1260px;top:500px;"><span class="n">3</span><p class="t">〈困りごと〉</p><p class="d">〈説明〉</p></div>
+  <p class="a goal" data-in="10.6" data-out="14.0" data-fx="up" style="left:140px;top:900px;">〈この〜を、短くすることが目的です〉</p>
+
+  <!-- 3. 解決のしかた（14.4〜25.0秒）: PoCの画面を、使う順に -->
+  <div class="a pill" data-in="14.4" data-out="25.0" data-fx="up" style="left:140px;top:110px;">解決のしかた</div>
+  <div class="a frame" data-in="14.6" data-out="19.8" data-fx="scale" style="left:720px;top:200px;"><div class="top"><i></i><i></i><i></i></div><img src="assets/screen-1.png" alt=""/></div>
+  <div class="a frame" data-in="19.4" data-out="25.0" data-fx="scale" style="left:720px;top:200px;"><div class="top"><i></i><i></i><i></i></div><img src="assets/screen-2.png" alt=""/></div>
+  <div class="a step" data-in="15.0" data-out="25.0" data-fx="left" data-active-in="15.0" data-active-out="17.4" style="left:140px;top:290px;"><span class="n">1</span><span class="t">〈操作1〉</span><p class="d">〈説明〉</p></div>
+  <div class="a step" data-in="15.4" data-out="25.0" data-fx="left" data-active-in="17.4" data-active-out="19.6" style="left:140px;top:500px;"><span class="n">2</span><span class="t">〈操作2〉</span><p class="d">〈説明〉</p></div>
+  <div class="a step" data-in="15.8" data-out="25.0" data-fx="left" data-active-in="19.6" data-active-out="25.0" style="left:140px;top:710px;"><span class="n">3</span><span class="t">〈結果〉</span><p class="d">〈説明〉</p></div>
+  <p class="a small" data-in="15.0" data-out="25.0" data-fx="fade" style="left:720px;top:1000px;font-size:22px;">〈他社の素材を映すなら出典。不要なら消す〉</p>
+
+  <!-- 4. 到達点（25.4〜32.0秒） -->
+  <div class="a pill" data-in="25.4" data-out="32.0" data-fx="up" style="left:140px;top:140px;">いまの到達点</div>
+  <h2 class="a" data-in="25.7" data-out="32.0" data-fx="up" style="left:140px;top:240px;">試作（PoC）で確かめたこと</h2>
+  <div class="a item ok" data-in="26.4" data-out="32.0" data-fx="up" style="left:140px;top:420px;"><span class="mark">✓</span><span>〈できたこと（数字は測ったもの）〉</span></div>
+  <div class="a item ok" data-in="27.0" data-out="32.0" data-fx="up" style="left:140px;top:540px;"><span class="mark">✓</span><span>〈できたこと〉</span></div>
+  <div class="a item todo" data-in="27.6" data-out="32.0" data-fx="up" style="left:140px;top:660px;"><span class="mark">△</span><span>〈まだのこと・これから確かめること〉</span></div>
+  <div class="a item todo" data-in="28.2" data-out="32.0" data-fx="up" style="left:140px;top:780px;"><span class="mark">△</span><span>〈まだのこと〉</span></div>
+  <p class="a small" data-in="28.8" data-out="32.0" data-fx="fade" style="left:144px;top:930px;">〈YYYY年M月・〈機種〉での実測。条件によって変わります〉</p>
+
+  <!-- 5. 次の一歩（32.4〜37.0秒） -->
+  <h2 class="a" data-in="32.4" data-out="37.0" data-fx="up" style="left:0;width:1920px;text-align:center;top:400px;font-size:72px;">〈次の一歩（例: 御社の実際の〜で、試させてください）〉</h2>
+  <p class="a lead" data-in="33.2" data-out="37.0" data-fx="up" style="left:0;width:1920px;text-align:center;top:560px;">〈補足（例: どこまで使えるかを、一緒に確かめさせてください）〉</p>
+
+  <!-- 6. 終わり（37.4秒〜） -->
+  <h2 class="a" data-in="37.4" data-out="999" data-fx="up" style="left:0;width:1920px;text-align:center;top:430px;">ご覧いただき、ありがとうございました</h2>
+  <p class="a lead" data-in="37.9" data-out="999" data-fx="up" style="left:0;width:1920px;text-align:center;top:560px;">株式会社Not a Square</p>
+  <p class="a small" id="credit" data-in="38.2" data-out="999" data-fx="fade" style="left:0;width:1920px;text-align:center;top:990px;font-size:24px;"></p>
+</div>
+<script>
+const DURATION = 41;  // 動画の長さ（秒）。最後の場面が出てから数秒残す
+const STILLS = [3, 11, 16.5, 18.5, 22, 30, 35, 39.5];  // pnpm stills で確認用の静止画を出す秒
+const ease = (x) => { x = Math.min(1, Math.max(0, x)); return 1 - Math.pow(1 - x, 3); };
+const anim = [...document.querySelectorAll(".a[data-in]")];
+
+function renderAt(t, T) {
+  if (T === undefined) T = t;  // T: 実際の経過秒（声に合わせて場面を止めている間も、背景は動かす）
+  for (const el of anim) {
+    const tin = +el.dataset.in, tout = +(el.dataset.out || 1e9);
+    const a = ease((t - tin) / 0.7), b = ease((t - tout) / 0.5);
+    let v = a * (1 - b);
+    if (el.dataset.activeIn !== undefined) {
+      const active = t >= +el.dataset.activeIn && t < +el.dataset.activeOut;
+      v *= active ? 1 : 0.38;
+    }
+    el.style.opacity = v;
+    const fx = el.dataset.fx;
+    let tr = "";
+    if (fx === "up") tr = `translateY(${(1 - a) * 40 - b * 16}px)`;
+    else if (fx === "scale") tr = `scale(${0.96 + 0.04 * a + 0.02 * Math.min(1, Math.max(0, (t - tin) / 6))})`;
+    else if (fx === "left") tr = `translateX(${(1 - a) * -80}px)`;
+    else if (fx === "right") tr = `translateX(${(1 - a) * 80}px)`;
+    el.style.transform = tr;
+  }
+  const b1 = document.getElementById("blob1"), b2 = document.getElementById("blob2");
+  if (b1) b1.style.transform = `translate(${Math.sin(T / 9) * 60}px, ${Math.cos(T / 11) * 40}px)`;
+  if (b2) b2.style.transform = `translate(${Math.cos(T / 10) * -50}px, ${Math.sin(T / 8) * 40}px)`;
+}
+document.getElementById("credit").textContent = new URLSearchParams(location.search).get("credit") || "";
+window.renderAt = renderAt;
+window.DURATION = DURATION;
+window.STILLS = STILLS;
+renderAt(0);
+</script>
+</body></html>
