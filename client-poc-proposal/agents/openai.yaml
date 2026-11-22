@@ -1,0 +1,4 @@
+interface:
+  display_name: "Client PoC Proposal"
+  short_description: "先方の話から、実現性の調査・PoC・紹介動画を作り、Driveに見せるものだけ届ける"
+  default_prompt: "$client-poc-proposal を使い、先方の話を要件メモにまとめ、技術的に実現できるかを調べてから、PoCと紹介動画（声・BGM付きと音なしの2本）を作ってください。どこまで進めるか分からない場合は、最初に質問してください。"

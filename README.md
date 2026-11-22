@@ -8,6 +8,7 @@ Not a Squareで利用するAI Skillと会社コンテキストの正本です。
 - `nas-poc-ui/`: 用途と操作の流れから画面構成を選び、淡い青とガラス表現でNaSの商談用Web PoCを統一するUI Skill（配置ガイド・配色CSS・PC／スマホの画面見本付き）
 - `cloudflare-os-build-gadget/`: Cloudflare OS Gadgetを設計・梱包・検証するSkill
 - `subsidy-lead-outreach/`: 補助金・認定リストの企業名を公式サイト・連絡先・ペルソナ付きのメルアポリストに整形するSkill
+- `client-poc-proposal/`: 受託・提案案件で、要件メモ→技術的に実現できるかの調査→PoC→紹介動画（声・BGM付きと音なしの2本）→Driveへの納品を進めるSkill（動画の作成スクリプト・VOICEVOXの確認スクリプト付き）
 - `company-context/`: NaSの会社情報と、確定・未確定事項の基礎コンテキスト
 
 ## 運用ルール

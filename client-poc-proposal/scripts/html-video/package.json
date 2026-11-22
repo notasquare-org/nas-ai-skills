@@ -1,0 +1,12 @@
+{
+  "name": "client-intro-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stills": "node render.mjs --stills",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}
